@@ -1,15 +1,18 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-
+  private http: HttpClient = inject(HttpClient);
+  private readonly apiUrl = `${environment.baseUrl}sign-in`; 
+  
   
   public login(requestData: unknown): Observable<unknown> {
-    console.log('Login request data:', requestData);
-    throw new Error('Method not implemented.');
+    return this.http.post<unknown>(this.apiUrl, requestData);
   }
 }
