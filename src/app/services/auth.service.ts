@@ -16,13 +16,20 @@ export class AuthService {
 
   private readonly apiUrl = `${environment.baseUrl}sign-in`; 
   private tokenKey: string = 'token'; 
-  interval: any
+  
   public login(requestData: unknown): Observable<unknown> {
     return this.http.post<unknown>(this.apiUrl, requestData);
   }
 
   public processToken(token: string): void {
     if(this.isTokenValid(token)) {
+      const decodedToken: { id: string } = jwtDecode(token);
+      if(!decodedToken.id) {
+        this.toast.error("Token is invalid", "Error");
+        throw new Error("Token is invalid " + token);
+      }
+      
+      this.utils.setOnClientStorage("userId", decodedToken.id);
       this.utils.setOnClientStorage(this.tokenKey, token);
     }
     else {
@@ -54,6 +61,7 @@ export class AuthService {
     } catch (error) {
       this.toast.error("Failed to decode token", "Error");
       console.error("Token decoding error", error);
+      this.utils.clearClientStorage();
       return false;
     }
   }

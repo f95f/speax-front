@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { PagesRoutingModule } from './pages-routing.module';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared/shared/shared.module';
-import { HttpClientModule } from '@angular/common/http';
+import { UserListComponent } from './user-list/user-list.component';
+import { ChatListComponent } from './chat-list/chat-list.component';
 
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    UserListComponent,
+    ChatListComponent,
   ],
   imports: [
     PagesRoutingModule,
