@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   getAuthToken(): string {
-      return "a token"
+      return "a 'token"
   }
 
   private http: HttpClient = inject(HttpClient);
