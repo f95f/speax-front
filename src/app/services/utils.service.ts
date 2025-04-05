@@ -64,7 +64,8 @@ export class UtilsService {
  */
   public clearClientStorage(): void {
     try {
-      localStorage.clear();
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
     }
     catch (error) {
       throw new Error("Error clearing local storage " + error);
