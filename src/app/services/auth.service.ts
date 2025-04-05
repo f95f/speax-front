@@ -7,6 +7,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
+  getAuthToken(): string {
+      return "a token"
+  }
 
   private http: HttpClient = inject(HttpClient);
   private readonly apiUrl = `${environment.baseUrl}sign-in`; 
