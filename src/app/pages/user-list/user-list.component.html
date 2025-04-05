@@ -1,1 +1,9 @@
-<p>user-list works!</p>
+<h1>User List</h1>
+<ul>
+    @for(user of userList; track user.id) {
+        <li>
+            <h2>{{user.name}}</h2>
+            <p>{{user.age}}</p>
+        </li>
+    }
+</ul>

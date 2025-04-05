@@ -16,7 +16,7 @@ export class AuthService {
 
   private readonly apiUrl = `${environment.baseUrl}sign-in`; 
   private tokenKey: string = 'token'; 
-  interval: any
+  
   public login(requestData: unknown): Observable<unknown> {
     return this.http.post<unknown>(this.apiUrl, requestData);
   }
