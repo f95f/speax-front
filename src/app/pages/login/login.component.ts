@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent {
   private service: AuthService = inject(AuthService);
   private formBuilder: FormBuilder = inject(FormBuilder);
+  private router: Router = inject(Router);
 
   loginForm!: FormGroup;
   constructor(private toastr: ToastrService) {}
@@ -40,6 +42,7 @@ export class LoginComponent {
         console.log('Login successful', response);
         this.service.processToken(response?.token);
         this.toastr.success('Login successful!', 'Success!');
+        this.router.navigate(['/app/home']);
       },
       error: (error: any) => {
         console.error('Login failed', error);
