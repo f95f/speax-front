@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,12 @@ export class LoginComponent {
   private formBuilder: FormBuilder = inject(FormBuilder);
 
   loginForm!: FormGroup;
+  constructor(private toastr: ToastrService) {}
 
   ngOnInit(): void {
+  
+      this.toastr.success('Hello world!', 'Toastr fun!');
+    
     this.loginForm = this.formBuilder.group({
       email: [[''], [Validators.required, Validators.email]],
       password: [[''], Validators.required]
@@ -33,6 +38,8 @@ export class LoginComponent {
     const observer = {
       next: (response: any) => {
         console.log('Login successful', response);
+        this.service.processToken(response?.token);
+        this.toastr.success('Login successful!', 'Success!');
       },
       error: (error: any) => {
         console.error('Login failed', error);
@@ -40,5 +47,5 @@ export class LoginComponent {
     }
     this.service.login(requestData).subscribe(observer);
   }
-  
+
 }
