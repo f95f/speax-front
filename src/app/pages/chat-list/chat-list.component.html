@@ -6,7 +6,7 @@
 
             <ul>
                 @for(chat of chatList; track chat) {
-                    <li (click)="selectedChat = chat">{{ chat.id }}</li>
+                    <li (click)="selectChat(chat)">{{ chat.id }}</li>
                 }
             </ul>
         </div>
@@ -28,7 +28,7 @@
                 <input type="text" [(ngModel)]="message" placeholder="Type a message" />
                 <button (click)="sendMessage()">Send</button>
             }
-            @else {
+            @if(selectedChat && !selectedChat.active) {
                 <button (click)="acceptChat()"> Accept</button>
             }
         </div>

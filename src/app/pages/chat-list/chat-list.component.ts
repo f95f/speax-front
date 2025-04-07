@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MessagingService } from '../../services/messaging.service';
 import { ToastrService } from 'ngx-toastr';
-import { IUserResume } from '../../interfaces/iuser';
 import { IMessage } from '../../interfaces/imessage';
 import { IChat, IStartChatRequest } from '../../interfaces/ichat';
 import { MessagingDataService } from '../../services/messaging-data.service';
@@ -38,14 +37,18 @@ export class ChatListComponent {
     });
 
     this.inviterId = this.utils.getFromClientStorage("userId");
-    
+    this.getChats();
+
     this.intervalId = setInterval(() => { 
       this.getChats();
+      this.getMessages();
     }, this.interval);
   }
 
 
   getChats(): void {
+    if(!this.inviterId) return;
+
     const observer = {
       next: (response: IChat[]) => {
         this.chatList = response;
@@ -61,7 +64,7 @@ export class ChatListComponent {
 
   getMessages(): void {
     if(!this.selectedChat) return;
-    
+    const chatId = this.selectedChat.id;
     const observer = {
       next: (response: IMessage[]) => {
         this.messageList = response;
@@ -71,7 +74,13 @@ export class ChatListComponent {
         this.toast.error('Error loading messages', 'Error!');
       }
     }
-    this.service.getMessagesByChat('11').subscribe(observer);
+    this.service.getMessagesByChat(chatId).subscribe(observer);
+  }
+
+
+  selectChat(chat: IChat): void {
+    this.selectedChat = chat;
+    this.getMessages();
   }
 
 
@@ -103,6 +112,8 @@ export class ChatListComponent {
     const observer = {
       next: (response: any) => {
         this.toast.success('Chat accepted successfully', 'Success!');
+        this.getMessages();
+        this.getChats();
       },
       error: (error: any) => {
         console.error('Error accepting chat', error);
@@ -133,6 +144,7 @@ export class ChatListComponent {
     }
     this.service.sendMessage(message).subscribe(observer);
   }
+
 
   ngOnDestroy(): void {
     if(this.intervalId) clearInterval(this.intervalId);
