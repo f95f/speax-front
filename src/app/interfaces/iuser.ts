@@ -1,5 +1,5 @@
 interface IUserResume {
-    id: number;
+    id: string;
     name: string;
     age: number;
     createdAt: string;

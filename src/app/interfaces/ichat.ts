@@ -1,6 +1,9 @@
+import { IUserResume } from "./iuser";
+
 interface IChat {
     id: string;
     active: boolean;
+    invitee: IUserResume;
 }
 
 interface IStartChatRequest {

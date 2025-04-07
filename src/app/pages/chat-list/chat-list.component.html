@@ -1,36 +1,46 @@
 <app-header></app-header>
 <div class="card card-body">
     <div class="row">
-        <div class="col col-6">
-            <h4 class="card-title">Chat List</h4>
-            <p class="card-text">This is a list of all the chats you have.</p>
+        <div class="card col col-6">
+            <div class="card-header">
+                <h4 class="card-title">Chat List</h4>
+                <p class="card-text">Lista de chats ativos.</p>
+            </div>
 
-            <ul>
+            <ul class="card-body">
                 @for(chat of chatList; track chat) {
-                    <li (click)="selectChat(chat)">{{ chat.id }}</li>
+                    <li (click)="selectChat(chat)">{{ chat.id }} || {{ chat.invitee.name || "sem nome" }}</li>
                 }
             </ul>
         </div>
 
-        <div class="col col-6">
-            <h4 class="card-title">Chat List</h4>
-            <p class="card-text">This is a list of all the chats you have.</p>
+        <div class="card col col-6">
+            <div class="card-header">
+                <h4 class="card-title"> Mensagens</h4>
+                <p class="card-text">{{ (selectedChat? 'Conversa com ' + selectedChat.invitee.name : 'Selecione uma conversa ao lado.') }}</p>
+            </div>
 
-            <ul>
+            <ul class="card-body">
                 @for(message of messageList; track message) {
-                    <li>{{ message.content }}</li>
+                    <li class="bubble-row" >
+                        <div [ngClass]="message.sender_id?.id == userId? 'bubble' : 'author-bubble'">
+                            {{ message.content }}
+                        </div>
+                    </li>
                 }
             </ul>
             @if(!selectedChat) {
-                <p>Select a chat to view messages.</p>
+                <p>Selecione uma conversa para ver mensagens.</p>
             }
 
             @if(selectedChat?.active) {
-                <input type="text" [(ngModel)]="message" placeholder="Type a message" />
-                <button (click)="sendMessage()">Send</button>
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="message" placeholder="Type a message" />
+                    <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+                </div>
             }
             @if(selectedChat && !selectedChat.active) {
-                <button (click)="acceptChat()"> Accept</button>
+                <button class="btn btn-primary" (click)="acceptChat()"> Accept</button>
             }
         </div>
     </div>

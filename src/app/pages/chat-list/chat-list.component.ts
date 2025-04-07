@@ -14,40 +14,47 @@ import { Subscription } from 'rxjs';
   styleUrl: './chat-list.component.scss'
 })
 export class ChatListComponent {
+isAuthor(arg0: string|undefined,arg1: string|null) {
+  return arg0 === arg1;
+}
   private service: MessagingService = inject(MessagingService);
   private dataService: MessagingDataService = inject(MessagingDataService);
   private utils: UtilsService = inject(UtilsService);
   private toast: ToastrService = inject(ToastrService);
   private subscriptions: Subscription[] = [];
 
-  private inviterId: string | null = null;
   private inviteeId: string | null = null;
-  private interval: number = 5000;
+  private interval: number = 500000;
   private intervalId: ReturnType<typeof setInterval> | null = null;
 
   selectedChat: IChat | null = null;
   chatList: IChat[] = [];
   messageList: IMessage[] = [];
   message: string = '';
+  userId: string | null = null;
 
 
   ngOnInit(): void {
     this.dataService.getInviteeId().subscribe((inviteeId: string | null) => {
       this.inviteeId = inviteeId;
+      if(inviteeId) {
+        this.startChat();
+      }
     });
 
-    this.inviterId = this.utils.getFromClientStorage("userId");
+    this.userId = this.utils.getFromClientStorage("userId");
     this.getChats();
 
     this.intervalId = setInterval(() => { 
       this.getChats();
       this.getMessages();
     }, this.interval);
+
   }
 
 
   getChats(): void {
-    if(!this.inviterId) return;
+    if(!this.userId) return;
 
     const observer = {
       next: (response: IChat[]) => {
@@ -85,9 +92,9 @@ export class ChatListComponent {
 
 
   startChat(): void {
-    if(!this.inviterId || !this.inviteeId) return;
+    if(!this.userId || !this.inviteeId) return;
     const chatRequest: IStartChatRequest = {
-      inviterId: this.inviterId,
+      inviterId: this.userId,
       inviteeId: this.inviteeId
     }
 
