@@ -24,7 +24,7 @@ isAuthor(arg0: string|undefined,arg1: string|null) {
   private subscriptions: Subscription[] = [];
 
   private inviteeId: string | null = null;
-  private interval: number = 500000;
+  private interval: number = 1000;
   private intervalId: ReturnType<typeof setInterval> | null = null;
 
   selectedChat: IChat | null = null;
@@ -62,7 +62,7 @@ isAuthor(arg0: string|undefined,arg1: string|null) {
       },
       error: (error: any) => {
         console.error('Error loading chats', error);
-        this.toast.error('Error loading chats', 'Error!');
+        // this.toast.error('Error loading chats', 'Error!');
       }
     }
     this.service.getChatsByUser().subscribe(observer);
@@ -78,7 +78,7 @@ isAuthor(arg0: string|undefined,arg1: string|null) {
       },
       error: (error: any) => {
         console.error('Error loading messages', error);
-        this.toast.error('Error loading messages', 'Error!');
+        // this.toast.error('Error loading messages', 'Error!');
       }
     }
     this.service.getMessagesByChat(chatId).subscribe(observer);

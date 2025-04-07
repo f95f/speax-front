@@ -1,13 +1,17 @@
 <app-header></app-header>
-<h1>User List</h1>
-<ul>
-    @for(user of userList; track user.id) {
-        <li>
-            <h2>{{user.name}}</h2>
-            <p>{{user.age}}</p>
-            <a [routerLink]="['../messages']">
-                Message
-            </a>
-        </li>
-    }
-</ul>
+<div class="container my-5">
+    <h1 class="text-center display-4 mb-4">Pessoas</h1>
+    <ul class="list-group shadow-sm">
+        @for(user of userList; track user.id) {
+            <li class="list-group-item d-flex align-items-center justify-content-between">
+                <div>
+                    <h2 class="h5 mb-1 text-primary">{{user.name}}</h2>
+                    <p class="mb-0 text-muted">Idade: {{user.age}} | Idiomas: Não Selecionado</p>
+                </div>
+                <a class="btn btn-outline-primary btn-sm" [routerLink]="['../messages']">
+                    <i class="bi bi-chat-dots"></i> Praticar
+                </a>
+            </li>
+        }
+    </ul>
+</div>

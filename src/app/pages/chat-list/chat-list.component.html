@@ -1,47 +1,63 @@
 <app-header></app-header>
-<div class="card card-body">
-    <div class="row">
-        <div class="card col col-6">
-            <div class="card-header">
-                <h4 class="card-title">Chat List</h4>
-                <p class="card-text">Lista de chats ativos.</p>
-            </div>
-
-            <ul class="card-body">
-                @for(chat of chatList; track chat) {
-                    <li (click)="selectChat(chat)">{{ chat.id }} || {{ chat.invitee.name || "sem nome" }}</li>
+<div class="container my-5">
+    <div class="row g-4">
+        <!-- Chat Messages Section -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">Mensagens</h4>
+                    <p class="card-text small mt-1">
+                        {{ selectedChat ? 'Conversa com ' + selectedChat.invitee.name : 'Selecione uma conversa ao lado.' }}
+                    </p>
+                </div>
+                <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                    <ul class="list-unstyled">
+                        @for(message of messageList; track message) {
+                            <li class="bubble-row mb-2">
+                                <div [ngClass]="message.sender_id?.id != userId ? 'bubble' : 'author-bubble'">
+                                    {{ message.content }}
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    @if(!selectedChat) {
+                        <p class="text-muted text-center">Selecione uma conversa para ver mensagens.</p>
+                    }
+                </div>
+                @if(selectedChat?.active) {
+                    <div class="card-footer">
+                        <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="message" placeholder="Type a message" />
+                            <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+                        </div>
+                    </div>
                 }
-            </ul>
+                @if(selectedChat && !selectedChat.active) {
+                    <div class="card-footer text-center">
+                        <button class="btn btn-success" (click)="acceptChat()">Accept</button>
+                    </div>
+                }
+            </div>
         </div>
 
-        <div class="card col col-6">
-            <div class="card-header">
-                <h4 class="card-title"> Mensagens</h4>
-                <p class="card-text">{{ (selectedChat? 'Conversa com ' + selectedChat.invitee.name : 'Selecione uma conversa ao lado.') }}</p>
-            </div>
-
-            <ul class="card-body">
-                @for(message of messageList; track message) {
-                    <li class="bubble-row" >
-                        <div [ngClass]="message.sender_id?.id == userId? 'bubble' : 'author-bubble'">
-                            {{ message.content }}
-                        </div>
-                    </li>
-                }
-            </ul>
-            @if(!selectedChat) {
-                <p>Selecione uma conversa para ver mensagens.</p>
-            }
-
-            @if(selectedChat?.active) {
-                <div class="input-group">
-                    <input type="text" class="form-control" [(ngModel)]="message" placeholder="Type a message" />
-                    <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+        <!-- Chat List Section -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">Conversas</h4>
+                    <p class="card-text small mt-1">Lista de chats ativos.</p>
                 </div>
-            }
-            @if(selectedChat && !selectedChat.active) {
-                <button class="btn btn-primary" (click)="acceptChat()"> Accept</button>
-            }
+                <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                    <ul class="list-group">
+                        @for(chat of chatList; track chat) {
+                            <li class="list-group-item list-group-item-action" (click)="selectChat(chat)">
+                                <strong>{{ chat.invitee.name || "Sem nome" }}</strong>
+                                <span class="text-muted small"> (ID: {{ chat.id }})</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
