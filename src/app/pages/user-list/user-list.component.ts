@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { IUserResume } from '../../interfaces/iuser';
+import { MessagingDataService } from '../../services/messaging-data.service';
 
 @Component({
   selector: 'app-user-list',
@@ -11,6 +12,7 @@ import { IUserResume } from '../../interfaces/iuser';
 })
 export class UserListComponent {
   private service: UsersService = inject(UsersService);
+  private dataService: MessagingDataService = inject(MessagingDataService);
   private toast: ToastrService = inject(ToastrService);
   
   userList: IUserResume[] = [];
@@ -30,5 +32,9 @@ export class UserListComponent {
       }
     }
     this.service.getUsers().subscribe(observer);
+  }
+
+  selectInvitee(id: string): void {
+    this.dataService.setInviteeId(id);
   }
 }

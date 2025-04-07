@@ -1,1 +1,36 @@
-<p>chat-list works!</p>
+<div class="card card-body">
+    <div class="row">
+        <div class="col col-6">
+            <h4 class="card-title">Chat List</h4>
+            <p class="card-text">This is a list of all the chats you have.</p>
+
+            <ul>
+                @for(chat of chatList; track chat) {
+                    <li (click)="selectedChat = chat">{{ chat.id }}</li>
+                }
+            </ul>
+        </div>
+
+        <div class="col col-6">
+            <h4 class="card-title">Chat List</h4>
+            <p class="card-text">This is a list of all the chats you have.</p>
+
+            <ul>
+                @for(message of messageList; track message) {
+                    <li>{{ message.content }}</li>
+                }
+            </ul>
+            @if(!selectedChat) {
+                <p>Select a chat to view messages.</p>
+            }
+
+            @if(selectedChat?.active) {
+                <input type="text" [(ngModel)]="message" placeholder="Type a message" />
+                <button (click)="sendMessage()">Send</button>
+            }
+            @else {
+                <button (click)="acceptChat()"> Accept</button>
+            }
+        </div>
+    </div>
+</div>
