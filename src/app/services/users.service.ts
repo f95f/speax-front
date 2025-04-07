@@ -18,4 +18,7 @@ export class UsersService {
     return this.http.get<IUserResume[]>(this.apiUrl);
   }
   
+  public getUserDetails(userId: string): Observable<IUserResume> {
+    return this.http.get<IUserResume>(`${this.apiUrl}/${userId}`);
+  }
 }
