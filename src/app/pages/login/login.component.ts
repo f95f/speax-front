@@ -19,8 +19,6 @@ export class LoginComponent {
   constructor(private toastr: ToastrService) {}
 
   ngOnInit(): void {
-  
-      this.toastr.success('Hello world!', 'Toastr fun!');
     
     this.loginForm = this.formBuilder.group({
       email: [[''], [Validators.required, Validators.email]],

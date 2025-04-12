@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <form [formGroup]="signUpForm" class="w-100 p-4 rounded shadow-sm" style="max-width: 400px; background-color: #f8f9fa;">
+        <h2 class="text-center mb-4 text-primary">Sign Up</h2>
+        
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome</label>
+            <input id="name" formControlName="name" type="text" class="form-control" placeholder="Enter your name" required />
+            <div *ngIf="signUpForm.get('name')?.invalid && (signUpForm.get('name')?.dirty || signUpForm.get('name')?.touched)" class="alert alert-danger mt-2">
+                <div *ngIf="signUpForm.get('name')?.errors?.['required']">Name is required.</div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter your email" required />
+            <div *ngIf="signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)" class="alert alert-danger mt-2">
+                <div *ngIf="signUpForm.get('email')?.errors?.['required']">Email is required.</div>
+                <div *ngIf="signUpForm.get('email')?.errors?.['email']">Invalid email format.</div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="birthdate" class="form-label">Birth Date</label>
+            <input id="birthdate" formControlName="birthdate" type="date" class="form-control" placeholder="Enter your birthdate" required />
+            <div *ngIf="signUpForm.get('birthdate')?.invalid && (signUpForm.get('birthdate')?.dirty || signUpForm.get('birthdate')?.touched)" class="alert alert-danger mt-2">
+                <div *ngIf="signUpForm.get('birthdate')?.errors?.['required']">Email is required.</div>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary w-100" (click)="onSubmit()">Sign Up</button>
+        <div class="text-center mt-3">
+            <a routerLink="/sign-in" class="text-decoration-none">Already have an account? Sign in here</a>
+        </div>
+    </form>
+</div>

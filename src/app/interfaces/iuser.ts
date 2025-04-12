@@ -6,4 +6,13 @@ interface IUserResume {
     updatedAt: string | null;
 }
 
-export type { IUserResume };
+interface ISignUp {
+    name: string;
+    email: string;
+    birthdate: string;
+}
+
+export type { 
+    IUserResume,
+    ISignUp
+};

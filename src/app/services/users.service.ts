@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { UtilsService } from './utils.service';
 import { Observable } from 'rxjs';
-import { IUserResume } from '../interfaces/iuser';
+import { ISignUp, IUserResume } from '../interfaces/iuser';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +20,9 @@ export class UsersService {
   
   public getUserDetails(userId: string): Observable<IUserResume> {
     return this.http.get<IUserResume>(`${this.apiUrl}/${userId}`);
+  }
+
+  public signUp(requestData: ISignUp): Observable<IUserResume> {
+    return this.http.post<IUserResume>(this.apiUrl, requestData);
   }
 }
