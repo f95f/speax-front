@@ -5,6 +5,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     SignUpComponent,
     UserListComponent,
     ChatListComponent,
+    ProfileComponent,
   ],
   imports: [
     PagesRoutingModule,
