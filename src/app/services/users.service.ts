@@ -23,6 +23,6 @@ export class UsersService {
   }
 
   public signUp(requestData: ISignUp): Observable<IUserResume> {
-    return this.http.post<IUserResume>(this.apiUrl, requestData);
+    return this.http.post<IUserResume>(`${this.apiUrl}/sign-up`, requestData);
   }
 }
