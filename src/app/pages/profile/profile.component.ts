@@ -23,7 +23,7 @@ export class ProfileComponent {
   private subscriptions: Subscription[] = [];
   userDetails: IUser | null = null;
 
-  
+
   ngOnInit(): void {
     this.subscriptions.push(
 
@@ -51,7 +51,7 @@ export class ProfileComponent {
 
 
   private return(): void {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/app/home']);
   }
 
   ngOnDestroy(): void {

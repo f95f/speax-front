@@ -8,7 +8,7 @@
                     <h2 class="h5 mb-1 text-primary">{{user.name}}</h2>
                     <p class="mb-0 text-muted">Idade: {{user.age}} | Idiomas: Não Selecionado</p>
                 </div>
-                <a class="btn btn-outline-primary btn-sm" [routerLink]="['../messages']">
+                <a class="btn btn-outline-primary btn-sm" [routerLink]="['../profile']" (click)="selectInvitee(user.id)">
                     <i class="bi bi-chat-dots"></i> Praticar
                 </a>
             </li>
